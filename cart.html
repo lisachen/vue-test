@@ -63,7 +63,7 @@
                   </ul>
                 </div>
                 <ul class="cart-item-list">
-                  <li>
+                  <li v-for="item in productList">
                     <div class="cart-tab-1">
                       <div class="cart-item-check">
                         <a href="javascript:void 0" class="item-check-btn">
@@ -71,27 +71,27 @@
                         </a>
                       </div>
                       <div class="cart-item-pic">
-                        <img src="static/images/goods-1.jpg" alt="烟">
+                        <img :src="item.productImage" :alt="item.productName">
                       </div>
                       <div class="cart-item-title">
-                        <div class="item-name">黄鹤楼香烟</div>
+                        <div class="item-name">{{item.productName}}</div>
                       </div>
                       <div class="item-include">
                         <dl>
                           <dt>赠送:</dt>
-                          <dd>打火机</dd>
+                          <dd v-for="item in item.parts">{{item.partsName}}</dd>
                         </dl>
                       </div>
                     </div>
                     <div class="cart-tab-2">
-                      <div class="item-price"></div>
+                      <div class="item-price">{{item.productPrice | moneyFormat}}</div>
                     </div>
                     <div class="cart-tab-3">
                       <div class="item-quantity">
                         <div class="select-self select-self-open">
                           <div class="quantity">
                             <a href="javascript:void 0">-</a>
-                            <input type="text" value="0" disabled>
+                            <input type="text" v-model="item.productQuantity" disabled>
                             <a href="javascript:void 0">+</a>
                           </div>
                         </div>
@@ -99,7 +99,7 @@
                       </div>
                     </div>
                     <div class="cart-tab-4">
-                      <div class="item-price-total">0.00</div>
+                      <div class="item-price-total">{{item.productPrice*item.productQuantity | moneyFormat}}</div>
                     </div>
                     <div class="cart-tab-5">
                       <div class="cart-item-operation">
@@ -163,5 +163,6 @@
 
     <script src="static/js/lib/vue.min.js"></script>
     <script src="static/js/lib/vue-resource.js"></script>
+    <script src="static/js/cart.js"></script>
 </body>
 </html>
