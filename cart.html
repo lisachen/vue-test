@@ -66,7 +66,7 @@
                   <li v-for="item in productList">
                     <div class="cart-tab-1">
                       <div class="cart-item-check">
-                        <a href="javascript:void 0" class="item-check-btn">
+                        <a href="javascript:void 0" class="item-check-btn" :class="{check:item.isChecked}" @click="checkProduct(item)">
                           <svg class="icon icon-ok"><use xlink:href="#icon-ok"></use></svg>
                         </a>
                       </div>
@@ -90,9 +90,9 @@
                       <div class="item-quantity">
                         <div class="select-self select-self-open">
                           <div class="quantity">
-                            <a href="javascript:void 0">-</a>
+                            <a href="javascript:void 0" @click="changeQuantity(item,-1)">-</a>
                             <input type="text" v-model="item.productQuantity" disabled>
-                            <a href="javascript:void 0">+</a>
+                            <a href="javascript:void 0" @click="changeQuantity(item,1)">+</a>
                           </div>
                         </div>
                         <div class="item-stock">有货</div>
@@ -117,16 +117,17 @@
             <div class="cart-foot-wrap">
               <div class="cart-foot-l">
                 <div class="item-all-check">
-                  <a href="javascript:void 0">
-                    <span class="item-check-btn" >
+                  <a href="javascript:void 0" @click="checkAllProduct()">
+                    <span class="item-check-btn"  :class="{check:isCheckedAll}">
                       <svg class="icon icon-ok"><use xlink:href="#icon-ok"></use></svg>
                     </span>
-                    <span>全选</span>
+                    <span v-if="isCheckedAll">取消全选</span>
+                    <span v-else>全选</span>
                   </a>
                 </div>
                 <div class="item-all-del">
                   <a href="javascript:void 0" class="item-del-btn">
-                    <span>取消全选</span>
+                    <span>删除</span>
                   </a>
                 </div>
               </div>
