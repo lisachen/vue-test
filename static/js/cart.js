@@ -3,6 +3,7 @@ new Vue({
   data: {
     productList: [],
     isCheckedAll: false,
+    totalMoney: 0,
   },
   filters: {
     //金额格式化
@@ -26,7 +27,8 @@ new Vue({
     //商品数量加减
     changeQuantity: function(item, way) {
       item.productQuantity = item.productQuantity + way;
-      return item.productQuantity = item.productQuantity < 1 ? 0 : item.productQuantity;
+      item.productQuantity = item.productQuantity < 1 ? 0 : item.productQuantity;
+      this.calcTotalMoney();
     },
     //单选
     checkProduct: function(item) {
@@ -35,16 +37,36 @@ new Vue({
         //Vue.set是全局注册
         this.$set(item, 'isChecked', true); //局部注册对象属性
       } else {
-        item.isChecked = false;
+        item.isChecked = !item.isChecked;
       }
+      this.calcTotalMoney();
     },
     //全选、取消全选
     checkAllProduct: function() {
       var _this = this;
       this.isCheckedAll = !this.isCheckedAll;
       this.productList.forEach(function(item, index) {
-        item.isChecked = _this.isCheckedAll;
+        if (typeof item.isChecked == "undefined") {
+          _this.$set(item, 'isChecked', true); //局部注册对象属性
+        } else {
+          item.isChecked = _this.isCheckedAll;
+        }
+      })
+      this.calcTotalMoney();
+    },
+    //计算总金额
+    calcTotalMoney: function() {
+      var _this = this;
+      _this.totalMoney = 0;
+      this.productList.forEach(function(item, index) {
+        if (item.isChecked) {
+          _this.totalMoney += item.productPrice * item.productQuantity;
+        }
       })
     }
   },
 });
+
+Vue.filter('moneyToFormat', function(value, type) {
+  return '￥ ' + value.toFixed(2) + type;
+})
