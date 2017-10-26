@@ -7,7 +7,8 @@ new Vue({
     editMdShow: false, //是否显示编辑弹出框
     newUserName: '',
     newStreetName: '',
-    newTel: ''
+    newTel: '',
+    curAddress: '',
   },
   filters: {
 
@@ -51,18 +52,39 @@ new Vue({
       event.stopPropagation(); //阻止事件冒泡
       this.curAddressIndex = 0;
     },
-    //添加新地址
+    //编辑地址
+    editMd: function(item) {
+      this.editMdShow = true;
+      this.newUserName = item.userName;
+      this.newStreetName = item.streetName;
+      this.newTel = item.tel;
+      this.curAddress = item;
+    },
+    //添加/修改地址
     saveAdress: function() {
+      var _this = this;
       this.editMdShow = false;
-      this.addressList.unshift({ //添加到数组前面
-        "addressId": "",
-        "userName": this.newUserName,
-        "streetName": this.newStreetName,
-        "postCode": "",
-        "tel": this.newTel,
-        "isDefault": false
-      });
-      this.curAddressIndex = 1;
+      if (this.curAddress == '') {
+        this.addressList.unshift({ //添加到数组前面
+          "addressId": "",
+          "userName": this.newUserName,
+          "streetName": this.newStreetName,
+          "postCode": "",
+          "tel": this.newTel,
+          "isDefault": false
+        });
+        this.curAddressIndex = 1;
+      } else {
+        this.addressList.forEach(function(item, index) {
+          if (_this.curAddress == item) {
+            item.userName = _this.newUserName;
+            item.streetName = _this.newStreetName;
+            item.tel = _this.new_Tel;
+          }
+        })
+      }
+      this.newUserName = this.newStreetName = this.newTel = this.curAddress='';//清空表单和当前选中的地址
     }
+    
   },
 });
