@@ -98,10 +98,6 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.md-show {
-    visibility: visible;
-}
-
 .md-overlay {
     position: fixed;
     top: 0;
@@ -110,6 +106,10 @@
     height: 100%;
     background: rgba(0,0,0,0.5);
     z-index: 200;
+    visibility: hidden;
+}
+.md-show {
+    visibility: visible;
 }
 
 .btn {

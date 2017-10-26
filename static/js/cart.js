@@ -4,6 +4,8 @@ new Vue({
     productList: [],
     isCheckedAll: false,
     totalMoney: 0,
+    isShowMd: false, //是否显示删除弹出框
+    curProductList: [],
   },
   filters: {
     //金额格式化
@@ -38,6 +40,9 @@ new Vue({
         this.$set(item, 'isChecked', true); //局部注册对象属性
       } else {
         item.isChecked = !item.isChecked;
+        if (!item.isChecked) { //如果全选状态下，取消单品选择
+          this.isCheckedAll = false;
+        }
       }
       this.calcTotalMoney();
     },
@@ -63,7 +68,32 @@ new Vue({
           _this.totalMoney += item.productPrice * item.productQuantity;
         }
       })
-    }
+    },
+    //删除
+    delConfirm: function(item) {
+      var _this = this;
+      this.isShowMd = true;
+      console.log(item);
+      if (typeof item == 'undefined') {
+        this.productList.forEach(function(item, index) {
+          if (item.isChecked) {
+            _this.curProductList[index] = item;
+          }
+        })
+      } else {
+        this.curProductList[0] = item;
+      }
+    },
+    delProduct: function() {
+      var _this = this;
+      this.curProductList.forEach(function(item, index) {
+        var index = _this.productList.indexOf(item);
+        _this.productList.splice(index, 1);
+      })
+      this.isShowMd = false;
+      this.curProductList = [];
+      this.totalMoney = 0;
+    },
   },
 });
 
