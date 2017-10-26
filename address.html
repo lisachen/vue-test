@@ -75,7 +75,7 @@
                   </a>
                 </div>
                 <div class="addr-opration addr-del">
-                  <a href="javascript:;" class="addr-del-btn">
+                  <a href="javascript:;" class="addr-del-btn" @click="delConfirm(item)">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
                 </div>
@@ -114,11 +114,11 @@
         <div class="shipping-method-wrap">
           <div class="shipping-method">
             <ul>
-              <li>
+              <li :class="{'check':shippingMethod==1}" @click="shippingMethod=1">
                 <div class="name">标准配送</div>
                 <div class="price">Free</div>
               </li>
-              <li>
+              <li :class="{'check':shippingMethod==2}" @click="shippingMethod=2">
                 <div class="name">高级配送</div>
                 <div class="price">180</div>
               </li>
@@ -128,18 +128,18 @@
         <div class="next-btn-wrap">
           <a href="javascript:;" class="btn btn--red">下一步</a>
         </div>
-        <div class="md-modal modal-msg md-modal-transition" id="showModal">
+        <div class="md-modal modal-msg md-modal-transition" :class="{'md-show':delMdShow}" id="showModal">
           <div class="md-modal-inner">
             <div class="md-top">
-              <button class="md-close">关闭</button>
+              <button class="md-close" @click="delMdClose()">关闭</button>
             </div>
             <div class="md-content">
               <div class="confirm-tips">
                 <p id="cusLanInfo">你确认删除此配送地址信息吗?</p>
               </div>
               <div class="btn-wrap col-2">
-                <button class="btn btn--m" id="btnModalConfirm">Yes</button>
-                <button class="btn btn--m btn--red" id="btnModalCancel">No</button>
+                <button class="btn btn--m" id="btnModalConfirm" @click="delAddress()">Yes</button>
+                <button class="btn btn--m btn--red" id="btnModalCancel" @click="delMdClose()">No</button>
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@
         <div class="md-modal modal-msg md-modal-transition" :class="{'md-show':editMdShow}" id="showModalw">
           <div class="md-modal-inner">
             <div class="md-top">
-              <button class="md-close" @click="editMdShow=false">关闭</button>
+              <button class="md-close" @click="editMdClose()">关闭</button>
             </div>
             <div class="md-content">
               <div class="confirm-tips">
@@ -184,12 +184,12 @@
               </div>
               <div class="btn-wrap col-2">
                 <button class="btn btn--s" id="btnModalConfirms" @click="saveAdress()">保存</button>
-                <button class="btn btn--s btn--red" id="btnModalCancels" @click="editMdShow=false">取消</button>
+                <button class="btn btn--s btn--red" id="btnModalCancels" @click="editMdClose()">取消</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="md-overlay" :class="{'md-show':editMdShow}" id="showOverLay"></div>
+        <div class="md-overlay" :class="{'md-show':editMdShow||delMdShow}" id="showOverLay"></div>
       </div>
     </div>
   </div>

@@ -9,6 +9,8 @@ new Vue({
     newStreetName: '',
     newTel: '',
     curAddress: '',
+    delMdShow: false,
+    shippingMethod: 1, //配送方式
   },
   filters: {
 
@@ -39,10 +41,12 @@ new Vue({
         _this.addressList = res.data.result;
       })
     },
+
     //显示全部地址
     viewMore: function() {
       this.limitLen = this.addressList.length;
     },
+
     //设为默认
     setDefault: function(item) {
       this.addressList.forEach(function(item, index) {
@@ -52,6 +56,7 @@ new Vue({
       event.stopPropagation(); //阻止事件冒泡
       this.curAddressIndex = 0;
     },
+
     //编辑地址
     editMd: function(item) {
       this.editMdShow = true;
@@ -63,7 +68,6 @@ new Vue({
     //添加/修改地址
     saveAdress: function() {
       var _this = this;
-      this.editMdShow = false;
       if (this.curAddress == '') {
         this.addressList.unshift({ //添加到数组前面
           "addressId": "",
@@ -83,8 +87,28 @@ new Vue({
           }
         })
       }
-      this.newUserName = this.newStreetName = this.newTel = this.curAddress='';//清空表单和当前选中的地址
+      this.editMdClose();
+    },
+    //关闭编辑框
+    editMdClose: function() {
+      this.editMdShow = false;
+      this.newUserName = this.newStreetName = this.newTel = this.curAddress = ''; //清空表单和当前选中的地址
+    },
+
+    //删除地址
+    delConfirm: function(item) {
+      this.curAddress = item;
+      this.delMdShow = true;
+    },
+    delAddress: function() {
+      var index = this.addressList.indexOf(this.curAddress);
+      this.addressList.splice(index, 1);
+      this.delMdClose();
+    },
+    //关闭删除框
+    delMdClose: function() {
+      this.delMdShow = false;
+      this.curAddress = '';
     }
-    
   },
 });
