@@ -12,6 +12,13 @@ new Vue({
     //截取前3个地址
     filterAddress: function() {
       var _this = this;
+      //默认地址排到第一个
+      this.addressList.forEach(function(item, index) {
+        if (item.isDefault) {
+          _this.addressList.splice(index, 1);
+          _this.addressList.unshift(item);
+        }
+      })
       return _this.addressList.slice(0, this.limitLen); //slice从已有的数组中返回选定的元素,不会破坏原生数组.splice会破坏原数组
     }
   },
@@ -37,6 +44,8 @@ new Vue({
         item.isDefault = false;
       })
       item.isDefault = true;
+      event.stopPropagation(); //阻止事件冒泡
+      this.curAddressIndex = 0;
     }
   },
 });
