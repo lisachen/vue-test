@@ -86,7 +86,7 @@
               </li>
 
               <li class="addr-new">
-                <div class="add-new-inner">
+                <div class="add-new-inner" @click="editMdShow=true">
                   <i class="icon-add">
                     <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
                   </i>
@@ -144,10 +144,10 @@
             </div>
           </div>
         </div>
-        <div class="md-modal modal-msg md-modal-transition" id="showModalw">
+        <div class="md-modal modal-msg md-modal-transition" :class="{'md-show':editMdShow}" id="showModalw">
           <div class="md-modal-inner">
             <div class="md-top">
-              <button class="md-close">关闭</button>
+              <button class="md-close" @click="editMdShow=false">关闭</button>
             </div>
             <div class="md-content">
               <div class="confirm-tips">
@@ -157,7 +157,7 @@
                   </label>
                   <div class="md-form-item__content" style="margin-left: 80px;">
                     <div  class="el-input">
-                      <input type="text" autocomplete="off" class="md-input__inner">
+                      <input type="text" autocomplete="off" class="md-input__inner" v-model='newUserName'>
                     </div>
                   </div>
                 </div>
@@ -167,7 +167,7 @@
                   </label>
                   <div class="md-form-item__content" style="margin-left: 80px;">
                     <div  class="el-input">
-                      <input type="text" autocomplete="off" class="md-input__inner">
+                      <input type="text" autocomplete="off" class="md-input__inner" v-model='newStreetName'>
                     </div>
                   </div>
                 </div>
@@ -177,19 +177,19 @@
                   </label>
                   <div class="md-form-item__content" style="margin-left: 80px;">
                     <div  class="el-input">
-                      <input type="text" autocomplete="off" class="md-input__inner">
+                      <input type="text" autocomplete="off" class="md-input__inner" v-model='newTel'>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="btn-wrap col-2">
-                <button class="btn btn--s" id="btnModalConfirms">保存</button>
-                <button class="btn btn--s btn--red" id="btnModalCancels">取消</button>
+                <button class="btn btn--s" id="btnModalConfirms" @click="saveAdress()">保存</button>
+                <button class="btn btn--s btn--red" id="btnModalCancels" @click="editMdShow=false">取消</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="md-overlay" id="showOverLay"></div>
+        <div class="md-overlay" :class="{'md-show':editMdShow}" id="showOverLay"></div>
       </div>
     </div>
   </div>

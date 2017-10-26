@@ -3,7 +3,11 @@ new Vue({
   data: {
     addressList: [],
     limitLen: 3,
-    curAddressIndex: 0
+    curAddressIndex: 0,
+    editMdShow: false, //是否显示编辑弹出框
+    newUserName: '',
+    newStreetName: '',
+    newTel: ''
   },
   filters: {
 
@@ -46,6 +50,19 @@ new Vue({
       item.isDefault = true;
       event.stopPropagation(); //阻止事件冒泡
       this.curAddressIndex = 0;
+    },
+    //添加新地址
+    saveAdress: function() {
+      this.editMdShow = false;
+      this.addressList.unshift({ //添加到数组前面
+        "addressId": "",
+        "userName": this.newUserName,
+        "streetName": this.newStreetName,
+        "postCode": "",
+        "tel": this.newTel,
+        "isDefault": false
+      });
+      this.curAddressIndex = 1;
     }
   },
 });
